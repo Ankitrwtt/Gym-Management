@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gym Management</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="color-scheme" content="dark light" />
+</head>
+<body>
+ 
+  <main class="container" id="authSection" aria-labelledby="appTitle">
+    <h1 id="appTitle" class="brand">Fitness Bar • Gym Management</h1>
+
+    <div class="tabs" role="tablist" aria-label="Authentication Tabs">
+      <button id="tabLogin" role="tab" aria-selected="true" class="active" tabindex="0">Login</button>
+      <button id="tabSignup" role="tab" aria-selected="false" tabindex="-1">Sign Up</button>
+    </div>
+
+    <form id="loginForm" class="form" autocomplete="on" aria-label="Login form">
+      <label class="field">
+        <span>Email</span>
+        <input id="loginEmail" type="email" inputmode="email" placeholder="you@email.com" required />
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input id="loginPass" type="password" placeholder="••••••••" required minlength="6" />
+      </label>
+      <button type="submit" class="btn primary">Login</button>
+      <p id="loginMsg" class="msg" role="alert" aria-live="polite"></p>
+    </form>
+
+ 
+    <form id="signupForm" class="form hidden" autocomplete="on" aria-label="Signup form">
+      <label class="field">
+        <span>Full Name</span>
+        <input id="suName" type="text" placeholder="Tony Stark" required />
+      </label>
+      <label class="field">
+        <span>Email</span>
+        <input id="suEmail" type="email" inputmode="email" placeholder="owner@fitnessbar.com" required />
+      </label>
+      <label class="field">
+        <span>Password (min 6)</span>
+        <input id="suPass" type="password" placeholder="••••••••" required minlength="6" />
+      </label>
+      <label class="field">
+        <span>Role</span>
+        <select id="suRole" aria-label="Role">
+          <option value="member">Member</option>
+          <option value="trainer">Trainer</option>
+          <option value="admin">Admin</option>
+        </select>
+      </label>
+      <button type="submit" class="btn primary">Create Account</button>
+      <p id="signupMsg" class="msg" role="alert" aria-live="polite"></p>
+    </form>
+  </main>
+
+
+  <section class="container hidden" id="dashboard" aria-labelledby="welcomeMsg">
+    <header class="dashbar">
+      <h2 id="welcomeMsg">Welcome</h2>
+      <div class="dash-actions">
+        <button id="logoutBtn" class="btn danger" title="Logout">Logout</button>
+      </div>
+    </header>
+
+   
+    <div class="kpis">
+      <article class="kpi">
+        <div class="kpi-label">Active Members</div>
+        <div class="kpi-value" id="kpiActive">0</div>
+      </article>
+      <article class="kpi">
+        <div class="kpi-label">Expiring (7 days)</div>
+        <div class="kpi-value" id="kpiExpiring">0</div>
+      </article>
+      <article class="kpi">
+        <div class="kpi-label">Total Trainers</div>
+        <div class="kpi-value" id="kpiTrainers">0</div>
+      </article>
+    </div>
+
+    <section class="panel">
+      <header class="panel-header">
+        <h3>Members</h3>
+        <div class="controls">
+          <input id="searchInput" type="search" placeholder="Search name, email, plan…" aria-label="Search members" />
+          <select id="filterStatus" aria-label="Filter by status">
+            <option value="all">All Status</option>
+            <option value="active">Active</option>
+            <option value="expired">Expired</option>
+          </select>
+          <select id="filterPlan" aria-label="Filter by plan">
+            <option value="all">All Plans</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Quarterly">Quarterly</option>
+            <option value="Half-Yearly">Half-Yearly</option>
+            <option value="Yearly">Yearly</option>
+          </select>
+          <select id="sortBy" aria-label="Sort by">
+            <option value="name">Sort: Name</option>
+            <option value="startDate">Sort: Start Date</option>
+            <option value="endDate">Sort: End Date</option>
+            <option value="status">Sort: Status</option>
+          </select>
+          <button id="clearFilters" class="btn ghost">Reset</button>
+          <button id="openAdd" class="btn primary">+ Add Member</button>
+        </div>
+      </header>
+
+      <div class="table-wrap" role="region" aria-label="Member list" tabindex="0">
+        <table class="table" id="memberTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email / Phone</th>
+              <th>Plan</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Status</th>
+              <th>Days Left</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="memberTbody">
+           
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    
+    <dialog id="memberModal" class="modal" aria-label="Member form">
+      <form id="memberForm" method="dialog" class="form form-grid">
+        <h3 id="memberFormTitle">Add Member</h3>
+        <input type="hidden" id="memberId" />
+
+        <label class="field">
+          <span>Full Name</span>
+          <input id="mName" type="text" placeholder="e.g., Rahul Sharma" required />
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input id="mEmail" type="email" placeholder="rahul@example.com" />
+        </label>
+        <label class="field">
+          <span>Phone</span>
+          <input id="mPhone" type="tel" inputmode="tel" placeholder="9876543210" />
+        </label>
+
+        <label class="field">
+          <span>Plan</span>
+          <select id="mPlan" required>
+            <option value="Monthly">Monthly</option>
+            <option value="Quarterly">Quarterly</option>
+            <option value="Half-Yearly">Half-Yearly</option>
+            <option value="Yearly">Yearly</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Start Date</span>
+          <input id="mStart" type="date" required />
+        </label>
+        <label class="field">
+          <span>End Date</span>
+          <input id="mEnd" type="date" required />
+        </label>
+
+        <footer class="modal-actions">
+          <button type="button" id="closeModal" class="btn ghost">Cancel</button>
+          <button type="submit" class="btn primary">Save</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <footer class="app-footer">
+      <small>© <span id="yearNow"></span> Fitness Bar — Demo App (local only)</small>
+    </footer>
+  </section>
+
+  <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
